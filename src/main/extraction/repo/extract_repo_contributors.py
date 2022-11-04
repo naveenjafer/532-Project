@@ -3,7 +3,7 @@ import os
 import requests
 import sys
 
-from extraction.utils.api_authentication import requests_access
+from src.main.extraction.utils.api_authentication import consts, dummy_util
 
 
 def main(inputRepoMetaFile, outputRepoUserFile):
@@ -15,13 +15,13 @@ def main(inputRepoMetaFile, outputRepoUserFile):
     repoNameContributors = {}
     for repo_name in repoNames:
         print("Extracting contributors for: ", repo_name)
-        url = f"https://api.github.com/repos/{requests_access.owner}/{repo_name}/contributors"
+        url = f"https://api.github.com/repos/{consts['owner']}/{repo_name}/contributors"
         # make the request and return the json
-        contributors= requests.get(url,headers=requests_access.headers).json()
+        contributors= requests.get(url,headers=consts["owner"].headers).json()
         repoNameContributors[repo_name] = contributors
     
     output_obj = {
-        "org_name" : requests_access.owner,
+        "org_name" : consts["owner"].owner,
         "repo_contributors" : repoNameContributors
     }
 
